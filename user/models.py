@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.exceptions import ValidationError
+# from django.core.exceptions import ValidationError
 from address.models import Country, City, Street
 
 
@@ -28,16 +28,22 @@ class User(AbstractUser):
     city = models.ForeignKey(City, on_delete=models.SET_NULL, related_name='users', null=True, blank=True)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='users', null=True, blank=True)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        street = cleaned_data.get('street')
-        city = cleaned_data.get('city')
-        country = cleaned_data.get('country')
-        if street and street.city != city:
-            raise ValidationError("'city' field should correspond with streets city field")
-        if city.country != country:
-            raise ValidationError("'country' field should correspond with cities country field")
-        return cleaned_data
+    # def save(self, *args, **kwargs):
+    #     self.full_clean()
+    #     return super(User, self).save(*args, **kwargs)
+    #
+    # def clean(self):
+    #     print('clean')
+    #     cleaned_data = super().clean()
+    #     print(cleaned_data)
+    #     street = cleaned_data.get('street')
+    #     city = cleaned_data.get('city')
+    #     country = cleaned_data.get('country')
+    #     if street and street.city != city:
+    #         raise ValidationError("'city' field should correspond with streets city field")
+    #     if city.country != country:
+    #         raise ValidationError("'country' field should correspond with cities country field")
+    #     return cleaned_data
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "phone"]
