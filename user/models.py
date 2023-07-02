@@ -15,7 +15,7 @@ class User(AbstractUser):
     Class to describe user
     """
 
-    username = models.CharField(max_length=150, unique=False)
+    username = models.CharField(max_length=150, unique=True)
 
     email = models.EmailField(unique=True, error_messages={"unique": "A user with that email already exists.", })
     phone_number = models.CharField(max_length=15,
@@ -45,8 +45,8 @@ class User(AbstractUser):
     #         raise ValidationError("'country' field should correspond with cities country field")
     #     return cleaned_data
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username", "phone"]
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email", "phone"]
 
     def __str__(self):
         return f"{self.username} {self.email}"
