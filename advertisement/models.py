@@ -1,15 +1,15 @@
+from django.conf import settings
 from django.db import models
 from django.core.validators import MinValueValidator
 
 
-class User(models.Model):
-    pass
+User = settings.AUTH_USER_MODEL
 
 class Category(models.Model):
     """
     Class to describe category
     """
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, unique=True)
 
     def __str__(self):
         return self.name
@@ -24,7 +24,7 @@ class Characteristic(models.Model):
     """
     Class to describe characteristic
     """
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, unique=True)
 
     def __str__(self):
         return self.name
@@ -49,6 +49,7 @@ class CategoryCharacteristic(models.Model):
         verbose_name = "category characteristic"
         verbose_name_plural = "category characteristics"
         ordering = ("id",)
+        unique_together = ['category', 'characteristic']
 
 
 class Advertisement(models.Model):
@@ -69,22 +70,6 @@ class Advertisement(models.Model):
     class Meta:
         verbose_name = "advertisement"
         verbose_name_plural = "advertisements"
-        ordering = ("id",)
-
-
-class Photo(models.Model):
-    """
-    Class to describe advertisement photo
-    """
-    photo = models.ImageField(upload_to='photo')
-    advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE, related_name='photos')
-
-    def __str__(self):
-        return f'фотография к объявлению {self.advertisement}'
-
-    class Meta:
-        verbose_name = "photo"
-        verbose_name_plural = "photos"
         ordering = ("id",)
 
 

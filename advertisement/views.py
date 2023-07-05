@@ -1,35 +1,24 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from .models import Category, Characteristic, CategoryCharacteristic
-from .serializers import CategorySerializer, CharacteristicSerializer, CategoryCharacteristicSerializer
+from .models import Category, Characteristic, CategoryCharacteristic, Advertisement, AdvertisementCharacteristic
+from .serializers import CategorySerializer, CharacteristicSerializer, CategoryCharacteristicSerializer, AdvertisementSerializer, AdvertisementCharacteristicSerializer
 
 
-class CategoryViewSet(ModelViewSet):
+class CategoryViewSet(ReadOnlyModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    
-    def get_permissions(self):
-        if self.action not in ['list', 'retrieve']:
-            return [IsAdminUser()]
-        return [IsAuthenticated()]
 
 
-class CharacteristicViewSet(ModelViewSet):
+class CharacteristicViewSet(ReadOnlyModelViewSet):
     queryset = Characteristic.objects.all()
     serializer_class = CharacteristicSerializer
     
-    def get_permissions(self):
-        if self.action not in ['list', 'retrieve']:
-            return [IsAdminUser()]
-        return [IsAuthenticated()]
-    
 
-class CategoryCharacteristicViewSet(ModelViewSet):
+class CategoryCharacteristicViewSet(ReadOnlyModelViewSet):
     queryset = CategoryCharacteristic.objects.all()
     serializer_class = CategoryCharacteristicSerializer
-    
-    def get_permissions(self):
-        if self.action not in ['list', 'retrieve']:
-            return [IsAdminUser()]
-        return [IsAuthenticated()]
+
+
+class AdvertisementViewSet(ReadOnlyModelViewSet):
+    queryset = Advertisement.objects.all()
+    serializer_class = AdvertisementSerializer
