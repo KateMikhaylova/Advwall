@@ -1,11 +1,10 @@
+from django.conf import settings
 from rest_framework import serializers
 
 from .models import Category, Characteristic, CategoryCharacteristic, Advertisement, AdvertisementCharacteristic
 
 
-class UserSerializer(serializers.ModelSerializer):
-    pass
-
+User = settings.AUTH_USER_MODEL
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,20 +27,16 @@ class CategoryCharacteristicSerializer(serializers.ModelSerializer):
         fields = ['id', 'category', 'characteristic', ]
 
 
+class AdvertisementCharacteristicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdvertisementCharacteristic
+        fields = ['characteristic', 'value']
+
+
 class AdvertisementSerializer(serializers.ModelSerializer):
-    author = UserSerializer(read_only=True)
-    category = CategorySerializer(read_only=True)
+    adv_characteristics = AdvertisementCharacteristicSerializer(many=True)
 
     class Meta:
         model = Advertisement
         fields = ['id', 'name', 'description', 'author', 'category',
-                  'price', 'viewed_count', 'created_at']
-
-
-class AdvertisementCharacteristicSerializer(serializers.ModelSerializer):
-    advertisement = AdvertisementSerializer(read_only=True)
-    characteristic = CharacteristicSerializer(read_only=True)
-
-    class Meta:
-        model = AdvertisementCharacteristic
-        fields = ['id', 'advertisement', 'characteristic', 'value']
+                  'adv_characteristics', 'price', 'viewed_count', 'created_at']
