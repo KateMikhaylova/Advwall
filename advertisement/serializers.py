@@ -1,10 +1,16 @@
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from .models import Category, Characteristic, CategoryCharacteristic, Advertisement, AdvertisementCharacteristic
 
 
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', ]
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,6 +41,7 @@ class AdvertisementCharacteristicSerializer(serializers.ModelSerializer):
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     adv_characteristics = AdvertisementCharacteristicSerializer(many=True)
+    author = UserSerializer(read_only=True)
 
     class Meta:
         model = Advertisement
