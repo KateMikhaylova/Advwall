@@ -78,6 +78,9 @@ class UserViewSet(ModelViewSet):
             return Response({"password": ["This fields are required."]}, status=status.HTTP_400_BAD_REQUEST)
         if raw_password1 != raw_password2:
             return Response({"password": ["Passport fields does not correspond."]}, status=status.HTTP_400_BAD_REQUEST)
+        if request.data.get('current_password') and (request.data.get('current_password') == raw_password1):
+            return Response({"password": ["New passport should differ from old one."]},
+                            status=status.HTTP_400_BAD_REQUEST)
         try:
             validate_password(raw_password1)
         except ValidationError as errors:
