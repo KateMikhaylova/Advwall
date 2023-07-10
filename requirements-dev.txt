@@ -1,4 +1,8 @@
 django
 djangorestframework
 psycopg2-binary
+django-silk
 Pillow
+pylint
+pylint-django
+isort
