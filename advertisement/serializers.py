@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import Category, Characteristic, CategoryCharacteristic, Advertisement, AdvertisementCharacteristic
-
+from .models import (Advertisement, AdvertisementCharacteristic, Category,
+                     CategoryCharacteristic, Characteristic)
 
 User = get_user_model()
 

@@ -1,8 +1,12 @@
-from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
-from .models import Category, Characteristic, CategoryCharacteristic, Advertisement, AdvertisementCharacteristic
-from .serializers import CategorySerializer, CharacteristicSerializer, CategoryCharacteristicSerializer, AdvertisementSerializer, AdvertisementCharacteristicSerializer
 from .mixins import UserQuerySetMixin
+from .models import (Advertisement, AdvertisementCharacteristic, Category,
+                     CategoryCharacteristic, Characteristic)
+from .serializers import (AdvertisementCharacteristicSerializer,
+                          AdvertisementSerializer,
+                          CategoryCharacteristicSerializer, CategorySerializer,
+                          CharacteristicSerializer)
 
 
 class CategoryViewSet(ReadOnlyModelViewSet):

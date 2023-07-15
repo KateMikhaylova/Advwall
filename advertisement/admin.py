@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Category, Characteristic, CategoryCharacteristic, Advertisement, AdvertisementCharacteristic
+from .models import (Advertisement, AdvertisementCharacteristic, Category,
+                     CategoryCharacteristic, Characteristic)
 
 
 class CategoryCharacteristicInline(admin.TabularInline):
