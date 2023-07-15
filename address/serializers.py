@@ -3,12 +3,14 @@ from rest_framework import serializers
 from .models import Street, City, Country
 
 class CountrySerializer(serializers.ModelSerializer):
+    """Country model serializer"""
     class Meta:
         model = Country
         fields = ['id', 'name', ]
 
 
 class CitySerializer(serializers.ModelSerializer):
+    """City model serializer"""
     country = CountrySerializer(read_only=True)
 
     class Meta:
@@ -17,6 +19,7 @@ class CitySerializer(serializers.ModelSerializer):
 
 
 class StreetSerializer(serializers.ModelSerializer):
+    """Street model serializer"""
     city = CitySerializer(read_only=True)
 
     class Meta:
