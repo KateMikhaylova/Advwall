@@ -30,10 +30,13 @@ class AdvertisementViewSet(ModelViewSet):
     """Advertisement model viewset"""
     queryset = Advertisement.objects.all()
     serializer_class = AdvertisementSerializer
-    user_field = 'author'
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user, viewed_count=0)
+    def get_queryset(self):
+        user =  self.request.GET.get('user')
+        if user:
+            return Advertisement.objects.filter(author=user)
+
+        return super().get_queryset()
 
 
 class AdvertisementCharacteristicViewSet(ModelViewSet):
