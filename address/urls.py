@@ -2,7 +2,6 @@ from rest_framework.routers import DefaultRouter
 
 from .views import CityViewSet, CountryViewSet, StreetViewSet
 
-
 app_name = 'address'
 
 router = DefaultRouter()

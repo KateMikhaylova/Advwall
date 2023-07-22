@@ -1,9 +1,8 @@
 from django.core.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 
+from address.models import City, Country, Street
 from user.models import User
-from address.models import Street, City, Country
-
 
 
 class UserSerializer(ModelSerializer):

@@ -1,8 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-# from django.core.exceptions import ValidationError
-from address.models import Country, City, Street
+from django.db import models
 
+# from django.core.exceptions import ValidationError
+from address.models import City, Country, Street
 
 USER_TYPE_CHOICES = (
     ("private entity", "private entity"),

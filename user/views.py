@@ -1,13 +1,14 @@
-from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+
 from user.models import User
-from user.serializers import UserSerializer
 from user.permissions import IsUser
+from user.serializers import UserSerializer
 
 
 class UserViewSet(ModelViewSet):
