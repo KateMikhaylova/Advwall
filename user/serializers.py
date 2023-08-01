@@ -1,11 +1,13 @@
 from django.core.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 
-from address.models import City, Country, Street
 from user.models import User
 
 
 class UserSerializer(ModelSerializer):
+    """
+    Serializer class to serialize user instances
+    """
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'phone_number', 'type', 'street', 'city', 'country']

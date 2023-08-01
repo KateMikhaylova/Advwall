@@ -17,16 +17,39 @@ class User(AbstractUser):
 
     username = models.CharField(max_length=150, unique=True)
 
-    email = models.EmailField(unique=True, error_messages={"unique": "A user with that email already exists.", })
-    phone_number = models.CharField(max_length=15,
-                                    unique=True,
-                                    error_messages={"unique": "A user with that phone number already exists.", })
+    email = models.EmailField(
+        unique=True,
+        error_messages={"unique": "A user with that email already exists.", }
+    )
+    phone_number = models.CharField(
+        max_length=15,
+        unique=True,
+        error_messages={"unique": "A user with that phone number already exists.", }
+    )
 
     type = models.CharField(max_length=15, choices=USER_TYPE_CHOICES, default="private entity")
 
-    street = models.ForeignKey(Street, on_delete=models.SET_NULL, related_name='users', null=True, blank=True)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL, related_name='users', null=True, blank=True)
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, related_name='users', null=True, blank=True)
+    street = models.ForeignKey(
+        Street,
+        on_delete=models.SET_NULL,
+        related_name='users',
+        null=True,
+        blank=True
+    )
+    city = models.ForeignKey(
+        City,
+        on_delete=models.SET_NULL,
+        related_name='users',
+        null=True,
+        blank=True
+    )
+    country = models.ForeignKey(
+        Country,
+        on_delete=models.SET_NULL,
+        related_name='users',
+        null=True,
+        blank=True
+    )
 
     # def save(self, *args, **kwargs):
     #     self.full_clean()

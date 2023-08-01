@@ -12,6 +12,9 @@ from user.serializers import UserSerializer
 
 
 class UserViewSet(ModelViewSet):
+    """
+    ViewSet class to provide CRUD operations with user instances
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     http_method_names = ["get", "post", "patch", "delete"]
@@ -55,7 +58,8 @@ class UserViewSet(ModelViewSet):
         if request.data.get('password'):
             current_password = request.data.get('current_password')
             if not check_password(current_password, request.user.password):
-                return Response({"password": ["Invalid password."]}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response({"password": ["Invalid password."]},
+                                status=status.HTTP_401_UNAUTHORIZED)
             response = self._check_passwords(request)
             if response:
                 return response
@@ -76,13 +80,18 @@ class UserViewSet(ModelViewSet):
         raw_password1 = request.data.get('password')
         raw_password2 = request.data.get('repeat_password')
         if not raw_password1 or not raw_password2:
-            return Response({"password": ["This fields are required."]}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"password": ["This fields are required."]},
+                            status=status.HTTP_400_BAD_REQUEST)
         if raw_password1 != raw_password2:
-            return Response({"password": ["Passport fields does not correspond."]}, status=status.HTTP_400_BAD_REQUEST)
-        if request.data.get('current_password') and (request.data.get('current_password') == raw_password1):
+            return Response({"password": ["Passport fields does not correspond."]},
+                            status=status.HTTP_400_BAD_REQUEST)
+        if request.data.get('current_password') and \
+                (request.data.get('current_password') == raw_password1):
             return Response({"password": ["New passport should differ from old one."]},
                             status=status.HTTP_400_BAD_REQUEST)
         try:
             validate_password(raw_password1)
+            return None
         except ValidationError as errors:
-            return Response({"password": [error for error in errors]}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"password": list(errors)},
+                            status=status.HTTP_400_BAD_REQUEST)
