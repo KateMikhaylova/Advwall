@@ -6,3 +6,7 @@ Pillow
 pylint
 pylint-django
 isort
+pytest
+pytest-cov
+pytest-django
+model-bakery
