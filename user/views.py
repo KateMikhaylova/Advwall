@@ -79,11 +79,14 @@ class UserViewSet(ModelViewSet):
     def _check_passwords(self, request):
         raw_password1 = request.data.get('password')
         raw_password2 = request.data.get('repeat_password')
-        if not raw_password1 or not raw_password2:
-            return Response({"password": ["This fields are required."]},
+        if not raw_password1:
+            return Response({"password": ["This field is required."]},
+                            status=status.HTTP_400_BAD_REQUEST)
+        if not raw_password2:
+            return Response({"repeat_password": ["This field is required."]},
                             status=status.HTTP_400_BAD_REQUEST)
         if raw_password1 != raw_password2:
-            return Response({"password": ["Passport fields does not correspond."]},
+            return Response({"password": ["Passwort fields does not correspond."]},
                             status=status.HTTP_400_BAD_REQUEST)
         if request.data.get('current_password') and \
                 (request.data.get('current_password') == raw_password1):
